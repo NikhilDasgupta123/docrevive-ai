@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 import uvicorn
 
+from api.health import router as health_router
+
 app = FastAPI(
     title="DocReceive AI",
     version="1.0.0"
@@ -12,11 +14,8 @@ def root():
         "messgae": " Running"
     }
 
-@app.get("/health")
-def health():
-    return{
-        "status":"ok"
-    }
+# Health check up route
+app.include_router(health_router, tags=['HEALTH CHECK UP'])
 
 if __name__=="__main__":
     uvicorn.run(
